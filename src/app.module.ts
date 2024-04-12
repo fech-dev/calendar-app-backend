@@ -4,7 +4,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      envFilePath: !process.env.NODE_ENV
+        ? '.env'
+        : `.env.${process.env.NODE_ENV}`,
+    }),
     MongooseModule.forRoot(process.env.DATABASE_URI, {
       dbName: process.env.DATABASE_NAME,
     }),
